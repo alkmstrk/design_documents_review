@@ -4,6 +4,8 @@
 - テーブル名の先頭の文字が大文字になっている
 - created_atが全てユーザ登録日時になっている
 - updated_atが全てユーザ更新日時になっている
+- カラム名ににテーブル名と同じワードを入れない
+- カラム名に略語は使うべきでない
 
 ## Admin
 - テーブル名が単数形になっている
@@ -12,15 +14,17 @@
 ## Users
 - カラム名に「user_」という接頭辞がついているが接頭辞は必要ない
 - 「user_f_name」,「user_f_kana」の NOT NULLに◯が入っていない
-- 「user_tel」などでカラム名に略語を使ってるが、略語は使うべきでない
-- 「zip_code」がinteger型になっている
-- 「member_status」のデータ型がstringになっているが,正しくはboolean
-- 「member_status」というカラム名では会員の何のステータスを表しているか分からない
+- 「user_f_name」,「user_tel」などでカラム名に略語を使ってるが、略語は使うべきでない
+- 「user_tel」がinteger型になっている,正しくはstring型
+- 「zip_code」がinteger型になっている,正しくはstring型
+- 「member_status」のデータ型がstringになっているが,DEFAULTがFALSEになっている。退会しているか否かの2通りなら,データ型はbooleanが適している。
+- 「member_status」というカラム名では会員の何のステータスを表しているか分からない。
 - 配送先を複数登録することを考慮してない
 
 ## Products
 - カラム名に「product_」という接頭辞がついているが接頭辞は必要ない
-- 「disc_id」,「genre_id」,「label_id」,「artist_id」はFK
+- 「genre_id」,「label_id」,「artist_id」はFK
+-  [Products]が1で[Discs]が多なので「disc_id」は必要ない
 - 「cd_image」はrefileを使うなら「cd_image_id」とする必要がある。またデータ型はstringのほうが好ましい
 - 「stock_status」のデータ型はintegerにして、enumで管理したほうがいい
 - 在庫数はカラムで管理するべきでない
@@ -28,6 +32,7 @@
 ## Discs
 - 「disc_id(正しくはid)」のINDEXに◯がない
 - FKが「products_id」となっていますが、「product_id」にすべき
+- ディスク番号はどのように管理するか。「track_num」がディスク番号のことならば、カラム名が適切でない
 
 ## Songs,Labels,Genre,Cart item
 - PKである「id」が抜けている
@@ -73,6 +78,7 @@
 - 「buy_at」はcreated_atと同じなので、必要ない
 - 「stock」が何を表しているかわからないので、「total_price」などにすべき
 - 送付先住所はあるが、郵便番号と住所がない
+
 
 **研修担当レビュー**
 <font color="Red">再提出の際はこのレビューを残しておいてください。</font>
@@ -129,3 +135,22 @@
 	- order_details などのするべき。
 - buy numは意味不明。スネークケースになってない。
 	- qunantityなどにするべき。
+
+	# フィードバック2回目
+[add]→付け加えなければいけないところ
+[fix]→修正が必要なところ
+[comment]→その他コメント（修正ではないけど、確認して欲しいポイントです）
+## 全体
+[add]→カラムにテーブル名と同じワードを入れない
+[add]→命名に略語を使わない。user_l_nameのlってなんですか？ってこと。全体で指摘した上で、各各のテーブルで指摘するのがベター。
+## Users
+- 「user_tel」などでカラム名に略語を使ってるが、略語は使うべきでない
+[fix]→更に、データ型がおかしい。
+- 「member_status」のデータ型がstringになっているが,正しくはboolean
+[fix]→enumを使う場合はbool型でも構わないので、boolが正しいと言い切ってしまうのは不適。要するにデータ型はstringでdefaultがfalseになっており、矛盾していることが間違っているということ。
+- 「member_status」というカラム名では会員の何のステータスを表しているか分からない
+[fix]→更に、データ型がおかしい。
+## Products
+[add]→子テーブルのidを持っている
+## Discs
+[add]→ディスク番号はどのように管理するか
