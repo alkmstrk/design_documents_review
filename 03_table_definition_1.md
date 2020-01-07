@@ -27,9 +27,9 @@
 - 「user_f_name」,「user_tel」などでカラム名に略語を使ってるが、略語は使うべきでない
  > 「user_f_name」,「user_tel」などでカラム名に略語を使われていますが、誰が見てもわかるようなカラム名に修正しましょう。
 - 「user_tel」がinteger型になっている,正しくはstring型
- > 「user_tel」がinteger型になっていますが、正しくはstring型です。
+ > 「user_tel」内のデータ(電話番号)に「-(ハイフン)」は含めますか？「-」を含めた場合のデータ型もintegerですか？
 - 「zip_code」がinteger型になっている,正しくはstring型
- > 「zip_code」がinteger型になっていますが、正しくはstring型です。
+ > 「zip_code」内のデータ(郵便番号)に「-(ハイフン)」は含めますか？「-」を含めた場合のデータ型もintegerですか？
 - 「member_status」のデータ型がstringになっているが,DEFAULTがFALSEになっている。退会しているか否かの2通りなら,データ型はbooleanが適している。
  > 「member_status」のデータ型がstringになっていますが、DEFAULTがFALSEになっています。退会しているか否かの2通りなら,データ型はbooleanが適しています。
 - 「member_status」というカラム名では会員の何のステータスを表しているか分からない。
@@ -45,7 +45,7 @@
 -  [Products]が1で[Discs]が多なので「disc_id」は必要ない
  > Productsが1でDiscsが多なので「disc_id」は必要ありません。
 - 「cd_image」はrefileを使うなら「cd_image_id」とする必要がある。またデータ型はstringのほうが好ましい
- > 「cd_image」はrefileを使うなら「cd_image_id」とする必要があります。またデータ型はstringのほうが好ましいです。
+ > 「cd_image」はrefileを利用しますか？利用する場合はrefileの命名規則に則りカラム名をつけてください。
 - 「stock_status」のデータ型はintegerにして、enumで管理したほうがいい
  > 「stock_status」のデータ型はintegerにして、enumで管理したほうが無駄がなくなります。
 - 在庫数はカラムで管理するべきでない
@@ -135,3 +135,14 @@
  > 郵便番号と宛名カラムが抜けている。
 
 
+# 指摘事項
+## Users
+- 「user_tel」がinteger型になっている,正しくはstring型
+ > 「user_tel」がinteger型になっていますが、正しくはstring型です。
+- 「zip_code」がinteger型になっている,正しくはstring型
+ > 「zip_code」がinteger型になっていますが、正しくはstring型です。
+    - integer型であっていますか？など、考えさせるような記述の方が良いです。
+    もしくはなぜstringなのかを記述してあげましょう。
+## Products
+- 「cd_image」はrefileを使うなら「cd_image_id」とする必要がある。またデータ型はstringのほうが好ましい
+    - cd_imageはrefileを利用しますか？利用する場合はrefileの命名規則に則りカラム名をつけてください。など答えを教えない方が良いと思います！
